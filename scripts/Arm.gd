@@ -5,9 +5,10 @@ export var target_position : Vector2 = Vector2.ZERO
 export var vertices_per_segment : int = 4
 export var thickness_start : float = 32
 export var thickness_end : float = 24
-export var curvature : float = 0.01
+export var curvature : float = 0
 export var relax_time : float = 0.05
-export var relax_time_tangent : float = 4
+export var relax_time_tangent : float = 0.5
+export var relax_time_normal : float = 3
 
 var _segments : Array = []
 var _curve : Curve2D
@@ -65,11 +66,19 @@ func _update_segments(delta : float) -> void:
 		var segment : Node2D = self._segments[segment_idx]
 		var segment_prev : Node2D = self._segments[segment_idx - 1]
 		var segment_next : Node2D = self._segments[segment_idx + 1]
+		var tangent := segment_next.position - segment_prev.position
+		if tangent.length() != 0:
+			tangent = tangent.normalized()
 		# The current segment experiences a "force"
 		# directed towards the midpoint of its neighbours.
 		var midpoint := 0.5 * (segment_next.position + segment_prev.position)
 		var displacement := segment.position - midpoint
-		segment.position -= displacement * delta / self.relax_time
+		var displacement_tangent := displacement.dot(tangent) * tangent
+		var displacement_normal := displacement - displacement_tangent
+		var time_factor_tangent := exp(-self.segment_count * delta / self.relax_time_tangent)
+		var time_factor_normal := exp(-self.segment_count * delta / self.relax_time_normal)
+		segment.position = midpoint + displacement_tangent * time_factor_tangent
+		segment.position = midpoint + displacement_normal * time_factor_normal
 
 func _update_mesh() -> void:
 	for segment_idx in range(0, self._segments.size()):

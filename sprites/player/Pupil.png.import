@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/pig.png-c480919a2d64bd437d800580b69807d5.stex"
+path="res://.import/Pupil.png-f887356c3c40f63518cc31e03080f8d4.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://sprites/pig.png"
-dest_files=[ "res://.import/pig.png-c480919a2d64bd437d800580b69807d5.stex" ]
+source_file="res://sprites/player/Pupil.png"
+dest_files=[ "res://.import/Pupil.png-f887356c3c40f63518cc31e03080f8d4.stex" ]
 
 [params]
 
@@ -20,7 +20,7 @@ compress/hdr_mode=0
 compress/bptc_ldr=0
 compress/normal_map=0
 flags/repeat=0
-flags/filter=false
+flags/filter=true
 flags/mipmaps=false
 flags/anisotropic=false
 flags/srgb=2

@@ -5,8 +5,8 @@ export var texture : StreamTexture
 export var segment_count : int = 10
 export var vertices_per_segment : int = 5
 export var target_position : Vector2 = Vector2.ZERO
-export var thickness_start : float = 32
-export var thickness_end : float = 24
+export var thickness_start : float = 20
+export var thickness_end : float = 28
 export var relax_time : float = 0.05
 export var curvature : float = 0
 export var relax_time_tangent : float = 0.5
@@ -63,7 +63,7 @@ func _draw() -> void:
 	var tangent_start := self._curve.interpolatef(0.01) - center_start
 	var normal_start := tangent_start.rotated(PI / 2)
 	if normal_start.length() != 0:
-		normal_start = normal_start.normalized() * self.thickness_start
+		normal_start = 0.5 * normal_start.normalized() * self.thickness_start
 	var prev_center := center_start
 	var prev_vertex_upper := center_start + normal_start
 	var prev_vertex_lower := center_start - normal_start
@@ -72,11 +72,11 @@ func _draw() -> void:
 	var vertex_count := self.vertices_per_segment * self._segments.size()
 	for vertex_idx in range(1, vertex_count):
 		var t := vertex_idx / float(vertex_count - 1)
-		var center := self._curve.interpolatef(t * self._segments.size())
+		var center := self._curve.interpolatef(t * (self._segments.size() - 1))
 		var tangent := center - prev_center
 		var normal := tangent.rotated(PI / 2)
 		if normal.length() != 0:
-			normal = normal.normalized() * lerp(self.thickness_start, self.thickness_end, t)
+			normal = 0.5 * normal.normalized() * lerp(self.thickness_start, self.thickness_end, t)
 		var vertex_upper := center + normal
 		var vertex_lower := center - normal
 		var order := 1

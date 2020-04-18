@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://sprites/player/Body.png" type="Texture" id=1]
 [ext_resource path="res://sprites/player/Head.png" type="Texture" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://entities/Arm.tscn" type="PackedScene" id=4]
 [ext_resource path="res://sprites/player/HandRight.png" type="Texture" id=5]
 [ext_resource path="res://scripts/Player.gd" type="Script" id=6]
+[ext_resource path="res://sprites/player/Arm.png" type="Texture" id=7]
 
 [node name="Player" type="Node2D"]
 script = ExtResource( 6 )
@@ -49,6 +50,7 @@ texture = ExtResource( 3 )
 
 [node name="ArmRight" parent="Body" instance=ExtResource( 4 )]
 position = Vector2( 40.5327, -85.6798 )
+texture = ExtResource( 7 )
 
 [node name="Hand" type="Node2D" parent="Body/ArmRight"]
 

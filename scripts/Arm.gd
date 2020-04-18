@@ -124,6 +124,14 @@ func _update_segments(delta : float) -> void:
 		var time_factor_normal := exp(-self.segment_count * delta / self.relax_time_normal)
 		segment.position = midpoint + displacement_tangent * time_factor_tangent
 		segment.position = midpoint + displacement_normal * time_factor_normal
+	# Rotate all segments so they face the tangent direction.
+	var tangent_start : Vector2 = self._segments[1].position - self._segments[0].position
+	var tangent_end : Vector2 = self._segments[-1].position - self._segments[-2].position
+	self._segments[0].rotation = atan2(tangent_start.y, tangent_start.x)
+	self._segments[-1].rotation = atan2(tangent_end.y, tangent_end.x)
+	for segment_idx in range(1, self._segments.size() - 1):
+		var tangent : Vector2 = self._segments[segment_idx + 1].position - self._segments[segment_idx - 1].position
+		self._segments[segment_idx].rotation = atan2(tangent.y, tangent.x)
 
 func _update_curve() -> void:
 	for segment_idx in range(0, self._segments.size()):

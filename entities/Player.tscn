@@ -56,6 +56,6 @@ texture = ExtResource( 7 )
 [node name="Hand" type="Node2D" parent="Body/ArmRight"]
 
 [node name="Sprite" type="Sprite" parent="Body/ArmRight/Hand"]
-position = Vector2( -2.94543, 53.108 )
+position = Vector2( 48.9225, 6.49262 )
 scale = Vector2( 0.75, 0.75 )
 texture = ExtResource( 5 )

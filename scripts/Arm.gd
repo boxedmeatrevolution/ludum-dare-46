@@ -6,6 +6,8 @@ export var vertices_per_segment : int = 4
 export var thickness_start : float = 32
 export var thickness_end : float = 24
 export var curvature : float = 0.01
+export var relax_time : float = 0.05
+export var relax_time_tangent : float = 4
 
 var _segments : Array = []
 var _curve : Curve2D
@@ -49,20 +51,25 @@ func _ready() -> void:
 	self._mesh_instance.mesh = self._mesh
 	
 	# Do updates before first frame.
-	self._update_segments()
+	self._update_segments(100)
 	self._update_mesh()
 
 func _process(delta : float) -> void:
-	self._update_segments()
+	self._update_segments(delta)
 	self._update_mesh()
 
-func _update_segments() -> void:
-	for segment_idx in range(0, self._segments.size()):
+func _update_segments(delta : float) -> void:
+	self._segments[0].position = Vector2.ZERO
+	self._segments[-1].position = self.target_position
+	for segment_idx in range(1, self._segments.size() - 1):
 		var segment : Node2D = self._segments[segment_idx]
-		var t := segment_idx / float(self._segments.size() - 1)
-		segment.position = self.target_position * t
-		segment.position.x = self.target_position.x * (1 - cos(0.5 * PI * t))
-		segment.position.y = self.target_position.y * sin(0.5 * PI * t)
+		var segment_prev : Node2D = self._segments[segment_idx - 1]
+		var segment_next : Node2D = self._segments[segment_idx + 1]
+		# The current segment experiences a "force"
+		# directed towards the midpoint of its neighbours.
+		var midpoint := 0.5 * (segment_next.position + segment_prev.position)
+		var displacement := segment.position - midpoint
+		segment.position -= displacement * delta / self.relax_time
 
 func _update_mesh() -> void:
 	for segment_idx in range(0, self._segments.size()):

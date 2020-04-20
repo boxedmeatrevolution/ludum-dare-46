@@ -1,0 +1,33 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://sprites/items/Butter.png" type="Texture" id=1]
+[ext_resource path="res://scripts/FlavourMeter.gd" type="Script" id=2]
+[ext_resource path="res://sprites/items/Pepper.png" type="Texture" id=3]
+[ext_resource path="res://sprites/items/Salt.png" type="Texture" id=4]
+[ext_resource path="res://sprites/items/SourCream.png" type="Texture" id=5]
+
+[node name="FlavourMeter" type="Node2D"]
+script = ExtResource( 2 )
+
+[node name="Butter" type="Sprite" parent="."]
+position = Vector2( 61.0592, 52.1171 )
+scale = Vector2( 0.25, 0.25 )
+texture = ExtResource( 1 )
+__meta__ = {
+"_editor_description_": ""
+}
+
+[node name="SourCream" type="Sprite" parent="."]
+position = Vector2( 182.048, 47.4922 )
+scale = Vector2( 0.15, 0.15 )
+texture = ExtResource( 5 )
+
+[node name="Salt" type="Sprite" parent="."]
+position = Vector2( 285.918, 47.653 )
+scale = Vector2( 0.25, 0.25 )
+texture = ExtResource( 4 )
+
+[node name="Pepper" type="Sprite" parent="."]
+position = Vector2( 393.234, 49.2027 )
+scale = Vector2( 0.25, 0.25 )
+texture = ExtResource( 3 )

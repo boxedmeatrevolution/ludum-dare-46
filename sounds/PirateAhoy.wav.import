@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/PirateAhoy.wav-e379fd2c642659c7e0c9ec5a3975724f.sample"
+
+[deps]
+
+source_file="res://sounds/PirateAhoy.wav"
+dest_files=[ "res://.import/PirateAhoy.wav-e379fd2c642659c7e0c9ec5a3975724f.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://sprites/player/Body.png" type="Texture" id=1]
 [ext_resource path="res://sprites/player/Head.png" type="Texture" id=2]
@@ -13,6 +13,7 @@
 [ext_resource path="res://sprites/player/EyeballRight.png" type="Texture" id=11]
 [ext_resource path="res://sprites/player/EyeballLeft.png" type="Texture" id=12]
 [ext_resource path="res://sprites/player/MouthClose.png" type="Texture" id=13]
+[ext_resource path="res://sounds/MainMmmh.wav" type="AudioStream" id=14]
 
 [sub_resource type="CircleShape2D" id=1]
 radius = 54.0
@@ -34,11 +35,13 @@ position = Vector2( 48.9225, 6.49262 )
 scale = Vector2( 0.75, 0.75 )
 texture = ExtResource( 5 )
 
-[node name="Head" type="Area2D" parent="Body"]
+[node name="Head" type="Node2D" parent="Body"]
 position = Vector2( 2.20088, -120.396 )
+
+[node name="Area2D" type="Area2D" parent="Body/Head"]
 collision_layer = 4
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Body/Head"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Body/Head/Area2D"]
 position = Vector2( 1.16794, -84.6768 )
 shape = SubResource( 1 )
 
@@ -48,7 +51,7 @@ scale = Vector2( 0.25, 0.25 )
 texture = ExtResource( 2 )
 
 [node name="EyeLeft" type="Node2D" parent="Body/Head"]
-position = Vector2( -20.3069, -86.9219 )
+position = Vector2( -20.989, -80.6128 )
 __meta__ = {
 "_edit_group_": true
 }
@@ -78,7 +81,7 @@ scale = Vector2( 0.25, 0.25 )
 texture = ExtResource( 3 )
 
 [node name="EyeRight" type="Node2D" parent="Body/Head"]
-position = Vector2( 26.6871, -87.315 )
+position = Vector2( 27.5397, -80.6649 )
 __meta__ = {
 "_edit_group_": true
 }
@@ -117,6 +120,11 @@ __meta__ = {
 scale = Vector2( 0.25, 0.25 )
 texture = ExtResource( 13 )
 
+[node name="AudioPlayerHit" type="AudioStreamPlayer2D" parent="Body/Head"]
+
+[node name="AudioPlayerMunch" type="AudioStreamPlayer2D" parent="Body/Head"]
+stream = ExtResource( 14 )
+
 [node name="ArmLeft" parent="Body" instance=ExtResource( 4 )]
 position = Vector2( -19.9017, -112.485 )
 texture = ExtResource( 7 )
@@ -133,4 +141,4 @@ texture = ExtResource( 8 )
 position = Vector2( 0, -64 )
 scale = Vector2( 0.25, 0.25 )
 texture = ExtResource( 1 )
-[connection signal="area_entered" from="Body/Head" to="." method="_on_head_collision"]
+[connection signal="area_entered" from="Body/Head/Area2D" to="." method="_on_head_collision"]

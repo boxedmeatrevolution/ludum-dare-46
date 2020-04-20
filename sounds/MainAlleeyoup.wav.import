@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/MainAlleeyoup.wav-0c9d637c57661e4474e5c7db81ddea04.sample"
+
+[deps]
+
+source_file="res://sounds/MainAlleeyoup.wav"
+dest_files=[ "res://.import/MainAlleeyoup.wav-0c9d637c57661e4474e5c7db81ddea04.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

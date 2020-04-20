@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/KnifeHit2.wav-3ea8e802968be89fe03650fc66feeebc.sample"
+
+[deps]
+
+source_file="res://sounds/KnifeHit2.wav"
+dest_files=[ "res://.import/KnifeHit2.wav-3ea8e802968be89fe03650fc66feeebc.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

@@ -3,7 +3,7 @@ extends Node2D
 const PirateScene := preload("res://entities/Pirate.tscn")
 
 export var pirate_spawn_frequency = 9
-var _next_pirate_spawn_time : float = 5
+var _next_pirate_spawn_time : float = 12
 var _pirate_spawn_timer : float = 0
 var _prev_pirate_spawn_choice : int = 2
 
@@ -24,9 +24,9 @@ func _process(delta : float) -> void:
 			pirate.position = Vector2(-260, (0.4 * randf() + 0.2) * size.y)
 			pirate.rotation = 0
 		elif spawn_choice == 1:
-			pirate.position = Vector2(size.x + 260, 0.6 * randf() * size.y)
+			pirate.position = Vector2(size.x + 260, (0.4 * randf() + 0.2) * size.y)
 			pirate.rotation = PI
 		elif spawn_choice == 2:
-			pirate.position = Vector2(randf() * size.x, -260)
+			pirate.position = Vector2((0.2 + 0.6 *randf()) * size.x, -260)
 			pirate.rotation = 0.5 * PI
 		self.add_child(pirate)

@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://sprites/player/Body.png" type="Texture" id=1]
 [ext_resource path="res://sprites/player/Head.png" type="Texture" id=2]
@@ -7,51 +7,24 @@
 [ext_resource path="res://sprites/player/HandRight.png" type="Texture" id=5]
 [ext_resource path="res://scripts/Player.gd" type="Script" id=6]
 [ext_resource path="res://sprites/player/Arm.png" type="Texture" id=7]
+[ext_resource path="res://sprites/player/HandLeft.png" type="Texture" id=8]
+[ext_resource path="res://sprites/player/EyebrowLeft.png" type="Texture" id=9]
+[ext_resource path="res://sprites/player/EyebrowRight.png" type="Texture" id=10]
+[ext_resource path="res://sprites/player/EyeballRight.png" type="Texture" id=11]
+[ext_resource path="res://sprites/player/EyeballLeft.png" type="Texture" id=12]
+
+[sub_resource type="CircleShape2D" id=1]
+radius = 54.0
 
 [node name="Player" type="Node2D"]
 script = ExtResource( 6 )
 
 [node name="Body" type="Node2D" parent="."]
 
-[node name="Head" type="Node2D" parent="Body"]
-position = Vector2( 2.20088, -120.396 )
-__meta__ = {
-"_edit_group_": true
-}
-
-[node name="Sprite" type="Sprite" parent="Body/Head"]
-position = Vector2( -3.56216, -80.1284 )
-scale = Vector2( 0.25, 0.25 )
-texture = ExtResource( 2 )
-
-[node name="PupilLeft" type="Node2D" parent="Body/Head"]
-position = Vector2( -20.7988, -86.2715 )
-__meta__ = {
-"_edit_group_": true
-}
-
-[node name="Sprite" type="Sprite" parent="Body/Head/PupilLeft"]
-scale = Vector2( 0.25, 0.25 )
-texture = ExtResource( 3 )
-
-[node name="PupilRight" type="Node2D" parent="Body/Head"]
-position = Vector2( 26.9614, -88.5261 )
-__meta__ = {
-"_edit_group_": true
-}
-
-[node name="Sprite" type="Sprite" parent="Body/Head/PupilRight"]
-scale = Vector2( 0.25, 0.25 )
-texture = ExtResource( 3 )
-
-[node name="Sprite" type="Sprite" parent="Body"]
-position = Vector2( 0, -64 )
-scale = Vector2( 0.25, 0.25 )
-texture = ExtResource( 1 )
-
 [node name="ArmRight" parent="Body" instance=ExtResource( 4 )]
 position = Vector2( 22.7555, -116.331 )
 texture = ExtResource( 7 )
+initial_angle = 0.15
 
 [node name="Hand" type="Node2D" parent="Body/ArmRight"]
 
@@ -59,3 +32,94 @@ texture = ExtResource( 7 )
 position = Vector2( 48.9225, 6.49262 )
 scale = Vector2( 0.75, 0.75 )
 texture = ExtResource( 5 )
+
+[node name="Head" type="Area2D" parent="Body"]
+position = Vector2( 2.20088, -120.396 )
+collision_layer = 4
+
+[node name="Sprite" type="Sprite" parent="Body/Head"]
+position = Vector2( -3.56216, -80.1284 )
+scale = Vector2( 0.25, 0.25 )
+texture = ExtResource( 2 )
+
+[node name="EyeLeft" type="Node2D" parent="Body/Head"]
+position = Vector2( -20.3069, -86.9219 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Sprite" type="Sprite" parent="Body/Head/EyeLeft"]
+position = Vector2( -2.03677, 0.678955 )
+scale = Vector2( 0.25, 0.25 )
+texture = ExtResource( 12 )
+
+[node name="Eyebrow" type="Node2D" parent="Body/Head/EyeLeft"]
+position = Vector2( -0.891846, -15.8197 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Sprite" type="Sprite" parent="Body/Head/EyeLeft/Eyebrow"]
+scale = Vector2( 0.25, 0.25 )
+texture = ExtResource( 9 )
+
+[node name="Pupil" type="Node2D" parent="Body/Head/EyeLeft"]
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Sprite" type="Sprite" parent="Body/Head/EyeLeft/Pupil"]
+scale = Vector2( 0.25, 0.25 )
+texture = ExtResource( 3 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Body/Head"]
+position = Vector2( 1.16794, -84.6768 )
+shape = SubResource( 1 )
+
+[node name="EyeRight" type="Node2D" parent="Body/Head"]
+position = Vector2( 26.6871, -87.315 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Sprite" type="Sprite" parent="Body/Head/EyeRight"]
+position = Vector2( 2.42473, 0.96991 )
+scale = Vector2( 0.25, 0.25 )
+texture = ExtResource( 11 )
+
+[node name="Eyebrow" type="Node2D" parent="Body/Head/EyeRight"]
+position = Vector2( 0.42292, -15.6978 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Sprite" type="Sprite" parent="Body/Head/EyeRight/Eyebrow"]
+scale = Vector2( 0.25, 0.25 )
+texture = ExtResource( 10 )
+
+[node name="Pupil" type="Node2D" parent="Body/Head/EyeRight"]
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Sprite" type="Sprite" parent="Body/Head/EyeRight/Pupil"]
+scale = Vector2( 0.25, 0.25 )
+texture = ExtResource( 3 )
+
+[node name="ArmLeft" parent="Body" instance=ExtResource( 4 )]
+position = Vector2( -19.9017, -112.485 )
+texture = ExtResource( 7 )
+initial_angle = 2.992
+
+[node name="Hand" type="Node2D" parent="Body/ArmLeft"]
+
+[node name="Sprite" type="Sprite" parent="Body/ArmLeft/Hand"]
+position = Vector2( 52.1344, 2.7139 )
+scale = Vector2( 0.75, 0.75 )
+texture = ExtResource( 8 )
+
+[node name="Sprite" type="Sprite" parent="Body"]
+position = Vector2( 0, -64 )
+scale = Vector2( 0.25, 0.25 )
+texture = ExtResource( 1 )
+[connection signal="area_entered" from="Body/Head" to="." method="_on_head_collision"]

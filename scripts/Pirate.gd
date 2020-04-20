@@ -8,7 +8,9 @@ onready var _animation_player = $AnimationPlayer
 export var popup_distance = 150
 export var throw_speed = 1000
 export var popup_time = 1
-export var wait_time = 2
+export var wait_time = 2.5
+
+onready var potato : Node2D = get_tree().get_root().get_node("Level/Potato")
 
 onready var _hand = $Hand
 
@@ -27,7 +29,10 @@ func _process(delta : float) -> void:
 			self._timer = 0
 			self.position = target_position
 	elif self._state == 1:
-		if self._timer > self.wait_time:
+		var throw : bool = (self._timer > self.wait_time)
+		if self._timer > 0.6 * self.wait_time && (self.position - self.potato.position).slide(Vector2.RIGHT.rotated(self.rotation)).length() < 80:
+			throw = true
+		if throw:
 			self._animation_player.play("Throw")
 			self._state = 2
 			self._timer = 0
@@ -52,8 +57,9 @@ func _throw() -> void:
 	var rot := self.global_rotation
 	var pos := item.global_position
 	self._hand.remove_child(item)
-	item.enabled = true
+	item.state = 1
 	item.rotation = rot
 	item.position = pos
 	item.velocity = self.throw_speed * Vector2.RIGHT.rotated(rot)
-	get_tree().get_root().add_child(item)
+	var knives_parent := get_tree().get_root().get_node("Level/Knives")
+	knives_parent.add_child(item)

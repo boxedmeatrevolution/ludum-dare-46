@@ -2,8 +2,8 @@ extends Node2D
 
 const PirateScene := preload("res://entities/Pirate.tscn")
 
-export var pirate_spawn_frequency = 10
-var _next_pirate_spawn_time : float = 15
+export var pirate_spawn_frequency = 9
+var _next_pirate_spawn_time : float = 5
 var _pirate_spawn_timer : float = 0
 var _prev_pirate_spawn_choice : int = 2
 

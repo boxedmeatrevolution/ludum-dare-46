@@ -38,6 +38,10 @@ texture = ExtResource( 5 )
 position = Vector2( 2.20088, -120.396 )
 collision_layer = 4
 
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Body/Head"]
+position = Vector2( 1.16794, -84.6768 )
+shape = SubResource( 1 )
+
 [node name="Sprite" type="Sprite" parent="Body/Head"]
 position = Vector2( -3.56216, -80.1284 )
 scale = Vector2( 0.25, 0.25 )
@@ -72,10 +76,6 @@ __meta__ = {
 [node name="Sprite" type="Sprite" parent="Body/Head/EyeLeft/Pupil"]
 scale = Vector2( 0.25, 0.25 )
 texture = ExtResource( 3 )
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Body/Head"]
-position = Vector2( 1.16794, -84.6768 )
-shape = SubResource( 1 )
 
 [node name="EyeRight" type="Node2D" parent="Body/Head"]
 position = Vector2( 26.6871, -87.315 )

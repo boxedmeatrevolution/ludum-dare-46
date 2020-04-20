@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://sprites/player/Body.png" type="Texture" id=1]
 [ext_resource path="res://sprites/player/Head.png" type="Texture" id=2]
@@ -12,6 +12,7 @@
 [ext_resource path="res://sprites/player/EyebrowRight.png" type="Texture" id=10]
 [ext_resource path="res://sprites/player/EyeballRight.png" type="Texture" id=11]
 [ext_resource path="res://sprites/player/EyeballLeft.png" type="Texture" id=12]
+[ext_resource path="res://sprites/player/MouthClose.png" type="Texture" id=13]
 
 [sub_resource type="CircleShape2D" id=1]
 radius = 54.0
@@ -105,6 +106,16 @@ __meta__ = {
 [node name="Sprite" type="Sprite" parent="Body/Head/EyeRight/Pupil"]
 scale = Vector2( 0.25, 0.25 )
 texture = ExtResource( 3 )
+
+[node name="Mouth" type="Node2D" parent="Body/Head"]
+position = Vector2( 3.6626, -38.8768 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Sprite" type="Sprite" parent="Body/Head/Mouth"]
+scale = Vector2( 0.25, 0.25 )
+texture = ExtResource( 13 )
 
 [node name="ArmLeft" parent="Body" instance=ExtResource( 4 )]
 position = Vector2( -19.9017, -112.485 )

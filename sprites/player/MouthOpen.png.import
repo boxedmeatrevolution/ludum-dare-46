@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/LD26_Pirate_Arm_R.png-e124fd8c848053cda8578e9501258a9c.stex"
+path="res://.import/MouthOpen.png-06589078e22a395bf79cbb11e8c4a3ae.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://sprites/player/LD26_Pirate_Arm_R.png"
-dest_files=[ "res://.import/LD26_Pirate_Arm_R.png-e124fd8c848053cda8578e9501258a9c.stex" ]
+source_file="res://sprites/player/MouthOpen.png"
+dest_files=[ "res://.import/MouthOpen.png-06589078e22a395bf79cbb11e8c4a3ae.stex" ]
 
 [params]
 

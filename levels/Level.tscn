@@ -9,6 +9,8 @@
 [ext_resource path="res://entities/PotatoTracker.tscn" type="PackedScene" id=7]
 [ext_resource path="res://entities/FlavourMeter.tscn" type="PackedScene" id=8]
 
+
+
 [node name="Level" type="Node2D"]
 
 [node name="Background" type="Sprite" parent="."]

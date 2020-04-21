@@ -14,6 +14,7 @@ onready var _mouth := $Body/Head/Mouth
 
 onready var _audio_player_hit := $Body/Head/AudioPlayerHit
 onready var _audio_player_munch := $Body/Head/AudioPlayerMunch
+onready var _audio_player_ooh := $Body/Head/AudioPlayerOoh
 onready var _head_sprite := $Body/Head/Sprite
 onready var _mouth_sprite := $Body/Head/Mouth/Sprite
 onready var _potato : Node2D = get_tree().get_root().get_node("Level/Potato")
@@ -27,6 +28,8 @@ const _sprite_head_chomp := [
 ]
 const _sprite_mouth_normal := preload("res://sprites/player/MouthClose.png")
 const _sprite_mouth_open := preload("res://sprites/player/MouthOpen.png")
+
+var _sound_munch_timer := 0.0
 
 # 0: normal
 # 1: mouth open to eat potat
@@ -60,6 +63,9 @@ func _process(delta : float) -> void:
 			if self._head_anim == 0:
 				self._mouth_sprite.texture = self._sprite_mouth_normal
 			else:
+				if self._sound_munch_timer <= 0:
+					self._sound_munch_timer = 2
+					self._audio_player_ooh.play()
 				self._mouth_sprite.texture = self._sprite_mouth_open
 		else:
 			self._eye_left.visible = false
@@ -76,8 +82,13 @@ func _process(delta : float) -> void:
 		if self._sprite_head_chomp_timer > 0.6:
 			self._head_sprite.texture = self._sprite_head_chomp[0]
 			self._sprite_head_chomp_timer = 0
+	
+	if self._sound_munch_timer >= 0:
+		self._sound_munch_timer -= delta
 	self._prev_head_anim = self._head_anim
 	var arm_target := get_global_mouse_position()
+	if arm_target.y < 50:
+		arm_target.y = 50
 	if self._active_arm == 1 && arm_target.x < self.position.x - self.arm_target_swap_zone:
 		self._active_arm = -1
 	elif self._active_arm == -1 && arm_target.x > self.position.x + self.arm_target_swap_zone:
@@ -113,7 +124,7 @@ func _process(delta : float) -> void:
 				self._bonk_timer = 0
 				self._head_bonk = 0
 			self._head_bonk *= exp(-delta / 0.25)
-		elif self._potato._temperature <= 0:
+		elif self._potato._temperature <= 0 && self._potato._death_timer <= 0:
 			if (self._potato.position - self.position).length() < 500:
 				self._head_anim = 1
 			else:
@@ -134,7 +145,7 @@ func _on_head_collision(area : Area2D):
 				else:
 					self._head_bonk = 0.3
 				self._bonk_timer = 1
-		else:
+		elif potato._death_timer <= 0:
 			potato._eat()
 			self._head_anim = 3
 			self._audio_player_munch.play()

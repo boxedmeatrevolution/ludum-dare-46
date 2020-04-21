@@ -2,12 +2,12 @@
 
 importer="wav"
 type="AudioStreamSample"
-path="res://.import/PirateTeehee.wav-0e388a2ce00d29f063dc451cf1054af0.sample"
+path="res://.import/PotatoAh.wav-f6b0fd9bc5a8538f4aab247649fbe59e.sample"
 
 [deps]
 
-source_file="res://sounds/PirateTeehee.wav"
-dest_files=[ "res://.import/PirateTeehee.wav-0e388a2ce00d29f063dc451cf1054af0.sample" ]
+source_file="res://sounds/PotatoAh.wav"
+dest_files=[ "res://.import/PotatoAh.wav-f6b0fd9bc5a8538f4aab247649fbe59e.sample" ]
 
 [params]
 

@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/PotatoEh.wav-ec62144251dc6779d5c60ca026b8a40d.sample"
+
+[deps]
+
+source_file="res://sounds/PotatoEh.wav"
+dest_files=[ "res://.import/PotatoEh.wav-ec62144251dc6779d5c60ca026b8a40d.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

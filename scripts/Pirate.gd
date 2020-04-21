@@ -5,7 +5,7 @@ var _state := 0
 var _timer : float = 0
 var _initial_position : Vector2
 onready var _animation_player = $AnimationPlayer
-export var popup_distance = 150
+export var popup_distance = 200
 export var throw_speed = 1000
 export var popup_time = 1
 export var wait_time = 2.0
@@ -14,16 +14,23 @@ onready var potato : Node2D = get_tree().get_root().get_node("Level/Potato")
 
 onready var _audio_player_arrive := $AudioPlayerArrive
 onready var _audio_player_hit := $AudioPlayerHit
+onready var _audio_player_throw := $AudioPlayerThrow
 
 const _sound_arrive := [
 	preload("res://sounds/PirateNeedAHand.wav"),
 	preload("res://sounds/PirateHereYaGo.wav"),
 	preload("res://sounds/PirateAhoy.wav"),
-	preload("res://sounds/PirateYarr.wav")
+	preload("res://sounds/PirateYarr.wav"),
+	preload("res://sounds/PirateHey.wav")
+]
+
+const _sound_throw := [
+	preload("res://sounds/Throw1.wav"),
+	preload("res://sounds/Throw2.wav")
 ]
 
 const _sound_hit := [
-	preload("res://sounds/PirateTeehee.wav")
+	preload("res://sounds/PirateYouch.wav")
 ]
 
 onready var _hand = $Hand
@@ -69,6 +76,8 @@ func _process(delta : float) -> void:
 			self.queue_free()
 
 func _throw() -> void:
+	self._audio_player_throw.stream = self._sound_throw[randi() % self._sound_throw.size()]
+	self._audio_player_throw.play()
 	var item : Node2D = self._hand.get_child(0)
 	var rot := self.global_rotation
 	var pos := item.global_position
@@ -82,10 +91,12 @@ func _throw() -> void:
 
 
 func _on_collision(area : Area2D) -> void:
-	if self._state != 4 && self._state != 0:
+	if self._state != 4 && self._state != 3 && !(self._state == 0 && self._timer < 0.6 * self.popup_time):
+		if self._state == 0:
+			self._timer = self.popup_time - self._timer
+		else:
+			self._timer = 0
 		self._state = 4
-		self._timer = 0
-		if self._animation_player.current_animation == "Throw":
-			self._animation_player.play("Prepare")
+		self._animation_player.play("Hurt")
 		self._audio_player_hit.stream = self._sound_hit[randi() % self._sound_hit.size()]
 		self._audio_player_hit.play()

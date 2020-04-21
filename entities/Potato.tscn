@@ -16,7 +16,7 @@ radius = 32.0
 script = ExtResource( 2 )
 
 [node name="FlamesSprite" type="Sprite" parent="."]
-position = Vector2( 0, -55 )
+position = Vector2( -1.38501, -65.7723 )
 scale = Vector2( 0.25, 0.25 )
 texture = ExtResource( 3 )
 hframes = 5
@@ -38,6 +38,8 @@ hframes = 4
 [node name="AudioPlayerJoy" type="AudioStreamPlayer2D" parent="."]
 
 [node name="AudioPlayerSplat" type="AudioStreamPlayer2D" parent="."]
+
+[node name="AudioPlayerImpact" type="AudioStreamPlayer2D" parent="."]
 
 [node name="Area2D" type="Area2D" parent="."]
 visible = false

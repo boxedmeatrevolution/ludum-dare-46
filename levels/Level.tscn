@@ -5,7 +5,7 @@
 [ext_resource path="res://sprites/Background.png" type="Texture" id=3]
 [ext_resource path="res://scripts/PirateSpawner.gd" type="Script" id=4]
 [ext_resource path="res://sounds/Music.ogg" type="AudioStream" id=5]
-[ext_resource path="res://scripts/Thermometer.gd" type="Script" id=6]
+[ext_resource path="res://entities/Thermometer.tscn" type="PackedScene" id=6]
 [ext_resource path="res://entities/PotatoTracker.tscn" type="PackedScene" id=7]
 [ext_resource path="res://entities/FlavourMeter.tscn" type="PackedScene" id=8]
 
@@ -19,7 +19,7 @@ centered = false
 [node name="Knives" type="Node2D" parent="."]
 
 [node name="Potato" parent="." instance=ExtResource( 2 )]
-position = Vector2( 398.815, 114.884 )
+position = Vector2( 512.777, -371.764 )
 
 [node name="Items" type="Node2D" parent="."]
 
@@ -29,9 +29,8 @@ position = Vector2( 512, 576 )
 [node name="Pirates" type="Node2D" parent="."]
 script = ExtResource( 4 )
 
-[node name="Thermometer" type="Node2D" parent="."]
-position = Vector2( 80.2223, 499.58 )
-script = ExtResource( 6 )
+[node name="Thermometer" parent="." instance=ExtResource( 6 )]
+position = Vector2( 720.732, 519.502 )
 
 [node name="Effect" type="Node2D" parent="."]
 
@@ -39,7 +38,7 @@ script = ExtResource( 6 )
 position = Vector2( 0, 60 )
 
 [node name="FlavourMeter" parent="." instance=ExtResource( 8 )]
-position = Vector2( 575.614, 474.539 )
+position = Vector2( 20.1778, 466.326 )
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 5 )

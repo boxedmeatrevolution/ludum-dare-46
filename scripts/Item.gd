@@ -7,6 +7,14 @@ var grav : float = 700
 var drag : float = 0.002
 var min_bounce_velocity : float = 300
 onready var circle_shape : CircleShape2D = $Area2D/CollisionShape2D.shape
+onready var _audio_player_impact := $AudioPlayerImpact
+
+const _sound_impact := [
+	preload("res://sounds/Impact5.wav"),
+	preload("res://sounds/Impact6.wav"),
+	preload("res://sounds/Impact7.wav")
+]
+var _sound_impact_timer : float = 0
 
 const ButterSprite := preload("res://sprites/items/Butter.png")
 const SaltSprite := preload("res://sprites/items/Salt.png")
@@ -26,6 +34,10 @@ func _ready() -> void:
 		self._sprite.texture = PepperSprite
 	elif self.type == 3:
 		self._sprite.texture = SaltSprite
+
+func _process(delta : float) -> void:
+	if self._sound_impact_timer > 0:
+		self._sound_impact_timer -= delta
 
 func _physics_process(delta : float) -> void:
 	self._velocity += self.grav * Vector2.DOWN * delta
@@ -64,3 +76,8 @@ func _on_arm_collision(area : Area2D) -> void:
 	if (area_position - self.position).length() < shape_radius + self._radius:
 		self.position = area_position + normal * (shape_radius + self._radius)
 	self._angular_velocity = 0.1 * tanh((self._velocity.x + 40 * randf() - 20) / 200)
+	
+	if self._sound_impact_timer <= 0:
+		self._sound_impact_timer = 0.25
+		self._audio_player_impact.stream = self._sound_impact[randi() % self._sound_impact.size()]
+		self._audio_player_impact.play()

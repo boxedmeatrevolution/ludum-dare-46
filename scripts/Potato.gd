@@ -5,17 +5,28 @@ const ArmSegment := preload("res://scripts/ArmSegment.gd")
 const HappySprite := preload("res://sprites/potato/Happy.png")
 const JoySprite := preload("res://sprites/potato/Joy.png")
 const SurpriseSprite := preload("res://sprites/potato/Surprise.png")
+const ScaredSprite := preload("res://sprites/potato/Scared.png")
 const DeadSprite := preload("res://sprites/potato/Eaten.png")
 const ItemScene := preload("res://entities/Item.tscn")
 
+const FoilScene := preload("res://entities/Foil.tscn")
 const PoofScene := preload("res://entities/Poof.tscn")
 
 onready var _audio_player_hit := $AudioPlayerHit
 onready var _audio_player_joy := $AudioPlayerJoy
 onready var _audio_player_splat := $AudioPlayerSplat
+onready var _audio_player_impact := $AudioPlayerImpact
+
+onready var player := get_tree().get_root().get_node("Level/Player")
 
 var _temperature : float = 1
 var _time_to_win : float = 90
+
+const _sound_impact := [
+	preload("res://sounds/Impact5.wav"),
+	preload("res://sounds/Impact6.wav"),
+	preload("res://sounds/Impact7.wav")
+]
 
 const _sound_hit := [
 	preload("res://sounds/PotatoOw.wav")
@@ -23,7 +34,14 @@ const _sound_hit := [
 
 const _sound_joy := [
 	preload("res://sounds/PotatoWee.wav"),
-	preload("res://sounds/PotatoYay.wav")
+	preload("res://sounds/PotatoYay.wav"),
+	preload("res://sounds/PotatoTeehee.wav")
+]
+
+const _sound_little_joy := [
+	preload("res://sounds/PotatoAh.wav"),
+	preload("res://sounds/PotatoEh.wav"),
+	preload("res://sounds/PotatoOh.wav"),
 ]
 
 const _sound_splat := [
@@ -33,6 +51,7 @@ const _sound_splat := [
 
 var _sound_joy_index := 0
 var _sound_joy_timer : float = 0
+var _sound_impact_timer : float = 0
 
 export var grav : float = 700
 export var drag : float = 0.002
@@ -93,6 +112,8 @@ func _process(delta : float) -> void:
 		get_tree().get_root().get_node("Level/Items").add_child(salt)
 	if self._sound_joy_timer > 0:
 		self._sound_joy_timer -= delta
+	if self._sound_impact_timer > 0:
+		self._sound_impact_timer -= delta
 	self._flames_animation_timer += delta
 	if self._flames_animation_timer > 0.125:
 		self._flames_sprite.frame = (self._flames_sprite.frame + 1) % 5
@@ -104,14 +125,16 @@ func _process(delta : float) -> void:
 	if self._surprise_timer > 0:
 		self._sprite.texture = SurpriseSprite
 		self._surprise_timer -= delta
+	if player._head_anim == 1:
+		self._sprite.texture = ScaredSprite
 	if self._death_timer > 0:
 		self._sprite.texture = DeadSprite
 		self._death_timer -= delta
-		if self._death_timer < 3 - 1.2:
+		if self._death_timer < 3 - 1:
 			self._death_sprite.frame = 3
-		elif self._death_timer < 3 - 0.8:
+		elif self._death_timer < 3 - 0.5:
 			self._death_sprite.frame = 2
-		elif self._death_timer < 3 - 0.4:
+		elif self._death_timer < 3 - 0.25:
 			self._death_sprite.frame = 1
 		else:
 			self._death_sprite.frame = 0
@@ -136,6 +159,10 @@ func _physics_process(delta : float) -> void:
 
 func _on_knife_collision(area : Area2D) -> void:
 	self._die()
+	var foil := FoilScene.instance()
+	foil.position = self.position
+	foil.velocity = self._velocity + 400 * Vector2.RIGHT.rotated(2 * PI * randf())
+	get_tree().get_root().get_node("Level/Effect").add_child(foil)
 	self._sprite.visible = false
 	self._death_sprite.visible = true
 	self._flames_sprite.visible = false
@@ -186,8 +213,13 @@ func _on_arm_collision(area : Area2D) -> void:
 	if area.get_collision_layer_bit(5):
 		var item := area.get_parent()
 		# If its an item
-		if surface_velocity_normal - velocity_normal > 300:
+		var merge_speed := 300.0
+		if item.type == 0:
+			merge_speed = 150
+		if abs(surface_velocity_normal - velocity_normal) > merge_speed:
 			if self.position.y > 0 && item.position.y > 0:
+				self._audio_player_splat.stream = self._sound_splat[randi() % self._sound_splat.size()]
+				self._audio_player_splat.play()
 				if item.type == 0:
 					Globals.has_butter = true
 					$Decor/Butter.visible = true
@@ -205,6 +237,10 @@ func _on_arm_collision(area : Area2D) -> void:
 				poof.global_position = self.global_position
 				get_tree().get_root().get_node("Level/Effect").add_child(poof)
 	
+	if self._sound_impact_timer <= 0:
+		self._sound_impact_timer = 0.25
+		self._audio_player_impact.stream = self._sound_impact[randi() % self._sound_impact.size()]
+		self._audio_player_impact.play()
 	var impulse = self._velocity - velocity_old
 	if self._surprise_timer <= 0 && self._death_timer <= 0:
 		if area.get_collision_layer_bit(2) || area.get_collision_layer_bit(4):
@@ -215,10 +251,11 @@ func _on_arm_collision(area : Area2D) -> void:
 				self._audio_player_joy.stream = self._sound_joy[self._sound_joy_index]
 				self._audio_player_joy.play()
 				self._sound_joy_index = (self._sound_joy_index + 1) % self._sound_joy.size()
-				self._sound_joy_timer = 0.8
-		else:
-			pass
+				self._sound_joy_timer = 1
+		elif impulse.length() > 600:
+			if self._sound_joy_timer <= 0:
+				self._audio_player_joy.stream = self._sound_little_joy[self._sound_joy_index]
+				self._audio_player_joy.play()
+				self._sound_joy_index = (self._sound_joy_index + 1) % self._sound_joy.size()
+				self._sound_joy_timer = 1
 
-
-func _on_collision(area):
-	pass # Replace with function body.

@@ -39,7 +39,7 @@ func _process(delta : float) -> void:
 		self._audio_player.play()
 	if self.state == 3:
 		self.fall_timer += delta
-		if self.fall_timer > 25:
+		if self.fall_timer > 5:
 			var pos := self.global_position
 			var rot := self.global_rotation
 			var sc := self.global_scale
